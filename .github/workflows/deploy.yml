@@ -31,9 +31,10 @@ jobs:
         coverage run -m pytest
         coverage report
 
-    - name: Deploy to Production
+    - name: Auto Merge
       if: success()
-      run: |
-        echo "Deploying to production..."
-        # Add your deployment script here
-        echo "Deployment successful!"
+      uses: pascalgn/automerge-action@v0.14.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        MERGE_LABELS: "automerge"
+        MERGE_METHOD: "merge"
