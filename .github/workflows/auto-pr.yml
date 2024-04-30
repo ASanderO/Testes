@@ -2,7 +2,7 @@ name: Auto Create Pull Request from Development to Main
 
 on:
   workflow_run:
-    workflows: [ "Run Tests on Commit" ]
+    workflows: ["Run Tests on Commit"]
     branches: [development]
     types:
       - completed
