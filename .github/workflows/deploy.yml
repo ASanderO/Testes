@@ -1,17 +1,17 @@
-name: Python application
+name: Deploy on Pull Request
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches:
+      - main  # Executes when a pull request is made to the main branch
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -22,17 +22,18 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest pytest-mock coverage
 
-    - name: Run tests with coverage
+    - name: Run tests
+      run: |
+        pytest
+
+    - name: Check code coverage
       run: |
         coverage run -m pytest
         coverage report
 
-    - name: Deploy
+    - name: Deploy to Production
       if: success()
       run: |
-        echo "Deploying application..."
-        # Simular um deploy, e.g., copiar arquivos, executar scripts de deploy, etc.
-        # Supondo que o deploy seria para um diretório local no servidor de CI
-        mkdir -p /var/www/myapp
-        cp -r * /var/www/myapp/
-        echo "Deploy successful!"
+        echo "Deploying to production..."
+        # Add your deployment script here
+        echo "Deployment successful!"

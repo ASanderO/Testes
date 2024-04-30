@@ -1,12 +1,12 @@
-name: Deploy Application
+name: Run Tests on Commit
 
 on:
   push:
     branches:
-      - main
+      - development  # Executes on every commit pushed to development branch
 
 jobs:
-  build-and-deploy:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,14 +26,7 @@ jobs:
       run: |
         pytest
 
-    - name: Check code coverage
+    - name: Run coverage
       run: |
         coverage run -m pytest
         coverage report
-
-    - name: Deploy to Production
-      if: success()
-      run: |
-        echo "Deploying to production..."
-        # Add your deployment script here
-        echo "Deployment successful!"
