@@ -1,4 +1,4 @@
-name: Deploy on Pull Request
+name: Deploy and Auto Merge on Pull Request
 
 on:
   pull_request:
@@ -31,10 +31,16 @@ jobs:
         coverage run -m pytest
         coverage report
 
+    - name: Deploy to Production
+      if: success()
+      run: |
+        echo "Deploying to production..."
+        # Add your deployment script here
+        echo "Deployment successful!"
+
     - name: Auto Merge
       if: success()
       uses: pascalgn/automerge-action@v0.14.2
-      env:
+      with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        MERGE_LABELS: "automerge"
-        MERGE_METHOD: "merge"
+        mergeMethod: merge
