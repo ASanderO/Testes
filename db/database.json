@@ -1,0 +1,19 @@
+[
+    {
+        "id": 5,
+        "name": "Teste 5"
+    },
+    {
+        "id": 2,
+        "name": "Integrado"
+    },
+    {
+        "id": 6,
+        "name": "Admin User"
+    },
+    {
+        "id": 3,
+        "name": "Teste 3",
+        "email": "novoemail@teste.com"
+    }
+]
