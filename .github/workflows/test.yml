@@ -1,15 +1,12 @@
-name: Run Tests
+name: Deploy Application
 
 on:
   push:
-    branches-ignore:
-      - main
-  pull_request:
     branches:
       - main
 
 jobs:
-  test:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +26,14 @@ jobs:
       run: |
         pytest
 
-    - name: Run coverage
+    - name: Check code coverage
       run: |
         coverage run -m pytest
         coverage report
+
+    - name: Deploy to Production
+      if: success()
+      run: |
+        echo "Deploying to production..."
+        # Add your deployment script here
+        echo "Deployment successful!"
