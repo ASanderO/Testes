@@ -6,6 +6,7 @@ on:
     branches:
       - main
 
+
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
