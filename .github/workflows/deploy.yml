@@ -1,4 +1,4 @@
-name: Deploy on Pull Request
+name: Deploy and Auto Merge on Pull Request
 
 on:
   pull_request:
@@ -37,3 +37,10 @@ jobs:
         echo "Deploying to production..."
         # Add your deployment script here
         echo "Deployment successful!"
+
+    - name: Auto Merge
+      if: success()
+      uses: pascalgn/automerge-action@v0.14.2
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        mergeMethod: merge
