@@ -10,20 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Important to ensure all history is checked out
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Update from Development
-          title: 'Merge Development Changes into Main'
-          body: 'This is an automatically generated pull request to merge changes from the development branch into the main branch.'
-          base: main   # Target branch to merge into
-          branch: 'merge-development-to-main-${{ github.run_number }}'
-          delete-branch: true  # Optionally delete the head branch after the PR is merged
+          commit-message: "Update from Development"
+          title: "Merge Development Changes into Main"
+          body: "This is an automatically generated pull request to merge changes from the development branch into the main branch."
+          base: main
+          branch: "merge-development-to-main-${{ github.run_number }}"
+          delete-branch: true
           draft: false
 
-      - name: Notify PR Creation
-        run: echo "Pull Request from Development to Main has been created successfully!"

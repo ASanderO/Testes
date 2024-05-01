@@ -3,30 +3,26 @@ name: Run Tests on Commit
 on:
   push:
     branches:
-      - development  # Executes on every commit pushed to development branch
+      - development
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest pytest-mock coverage
-
-    - name: Run tests
-      run: |
-        pytest
-
-    - name: Run coverage
-      run: |
-        coverage run -m pytest
-        coverage report
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-mock coverage
+      - name: Run tests
+        run: |
+          pytest
+      - name: Run coverage
+        run: |
+          coverage run -m pytest
+          coverage report

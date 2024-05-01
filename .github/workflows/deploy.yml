@@ -3,44 +3,37 @@ name: Deploy and Auto Merge on Pull Request
 on:
   pull_request:
     branches:
-      - main  # Executes when a pull request is made to the main branch
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pytest pytest-mock coverage
-
-    - name: Run tests
-      run: |
-        pytest
-
-    - name: Check code coverage
-      run: |
-        coverage run -m pytest
-        coverage report
-
-    - name: Deploy to Production
-      if: success()
-      run: |
-        echo "Deploying to production..."
-        # Add your deployment script here
-        echo "Deployment successful!"
-
-    - name: Auto Merge
-      if: success()
-      uses: pascalgn/automerge-action@v0.14.2
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        mergeMethod: merge
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-mock coverage
+      - name: Run tests
+        run: |
+          pytest
+      - name: Check code coverage
+        run: |
+          coverage run -m pytest
+          coverage report
+      - name: Simulate Deployment
+        if: success()
+        run: |
+          echo "Simulating deployment to production..."
+          echo "Deployment successful!"
+      - name: Auto Merge
+        if: success()
+        uses: pascalgn/automerge-action@v0.14.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mergeMethod: merge
