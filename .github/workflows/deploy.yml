@@ -33,6 +33,7 @@ jobs:
       - name: Auto Merge
         if: success()
         uses: pascalgn/automerge-action@v0.14.2
-        with:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
           mergeMethod: merge
