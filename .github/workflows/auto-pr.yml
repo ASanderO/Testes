@@ -1,23 +1,31 @@
 name: Auto Create Pull Request from Development to Main
 
 on:
-  push:
-    branches:
-      - development
+  workflow_run:
+    workflows: ["Run Tests on Commit"]
+    types:
+      - completed
+
 
 jobs:
   create-pull-request:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Update from Development"
-          title: "Merge Development Changes into Main"
-          body: "This is an automatically generated pull request to merge changes from the development branch into the main branch."
+          commit-message: Update from Development
+          title: 'Merge Development Changes into Main'
+          body: 'This is an automatically generated pull request to merge changes from the development branch into the main branch.'
           base: main
-          branch: "merge-development-to-main-${{ github.run_number }}"
+          branch: 'merge-development-to-main-${{ github.run_number }}'
           delete-branch: true
           draft: false
+    permissions:
+      contents: write
+      pull-requests: write
